@@ -1,0 +1,56 @@
+1.OS:
+os 64 bit
+
+2.Libraries:
+sudo apt update
+sudo apt upgrade
+
+2_a.Opencv:
+sudo apt install python3-opencv
+sudo raspi-config (Enable Legacy Camera)
+
+
+2_b.Tensorflow:
+sudo apt install libatlas-base-dev
+pip3 install tensorflow
+
+2_c.Pynmea2:
+sudo pip3 install pynmea2
+(Might Need To Perform Below Commands Before Above One)
+sudo apt remove python3-pip
+wget https://bootstrap.pypa.io/get-pip.py
+sudo python3 get-pip.py
+(sudp) pip3 install pyopenssl --upgrade
+
+2_d.Firebase:
+sudo pip3 install firebase-admin
+
+3.GPS:
+sudo nano /boot/config.txt(Paste Given Files At The End),
+
+dtparam=spi=on
+dtoverlay=pi3-disable-bt
+core_freq=250
+enable_uart=1
+force_turbo=1
+
+sudo cp /boot/cmdline.txt /boot/cmdline_backup.txt
+sudo nano /boot/cmdline.txt(Replace Everything With Given File),
+
+dwc_otg.lpm_enable=0 console=tty1 root=/dev/mmcblk0p2 rootfstype=ext4 elevator=deadline fsck.repair=yes rootwait quiet splash plymouth.ignore-serial-consoles
+
+sudo reboot
+sudo cat /dev/ttyAMA0
+ls -l /dev(Make Sure On Website: https://sparklers-the-makers.github.io/blog/robotics/use-neo-6m-module-with-raspberry-pi/)
+sudo systemctl stop serial-getty@ttyAMA0.service
+sudo systemctl disable serial-getty@ttyAMA0.service
+
+4.Autoscript:
+python3 /home/nomir/Desktop/Project/auto.py(check)
+sudo nano /etc/xdg/autostart/display.desktop
+
+[Desktop Entry]
+Name=Project
+Exec=/usr/bin/python3 /home/nomir/Desktop/Project/testpothole_1.py
+
+(save in the of file)Ctrl+O
